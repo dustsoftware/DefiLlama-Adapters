@@ -13,6 +13,7 @@
   const btcPoolAddress = "0x4f6A43Ad7cba042606dECaCA730d4CE0A57ac62e"
   const usdPoolAddress = "0x3911f80530595fbd01ab1516ab61255d75aeb066"
   const veth2PoolAddress = "0xdec2157831D6ABC3Ec328291119cc91B337272b5"
+  const alethPoolAddress = "0xa6018520EAACC06C30fF2e1B3ee2c7c22e64196a"
 
   const tokens = {
     // TBTC
@@ -30,9 +31,13 @@
     // USDT
     "0xdAC17F958D2ee523a2206206994597C13D831ec7": [usdPoolAddress],
     // WETH
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" : [veth2PoolAddress],
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" : [veth2PoolAddress, alethPoolAddress],
     // VETH2
     "0x898BAD2774EB97cF6b94605677F43b41871410B1" : [veth2PoolAddress],
+    // SETH
+    "0x5e74C9036fb86BD7eCdcb084a0673EFc32eA31cb" : [alethPoolAddress],
+    // ALETH
+    "0x0100546F2cD4C9D97f798fFC9755E47865FF7Ee6" : [alethPoolAddress],
   }
 
 /*==================================================
