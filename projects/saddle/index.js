@@ -5,11 +5,15 @@
   const sdk = require('@defillama/sdk');
   const BigNumber = require('bignumber.js');
   const _ = require('underscore');
-  const { staking } = require('../helper/staking');
 
 /*==================================================
   Addresses
   ==================================================*/
+  enum PoolType {
+    BTC,
+    ETH,
+    USD,
+  }
 
   const btcPoolAddress = "0x4f6A43Ad7cba042606dECaCA730d4CE0A57ac62e"
   const usdPoolAddress = "0x3911f80530595fbd01ab1516ab61255d75aeb066"
@@ -55,18 +59,44 @@
     "0xad3e3fc59dff318beceaab7d00eb4f68b1ecf195" : [wcusdMetapoolAddress]
   }
 
-  const fantom_usdPoolAddress = "0xBea9F78090bDB9e662d8CB301A00ad09A5b756e9"
-  const fantom_usdc = "0x04068DA6C83AFCFA0e13ba15A6696662335D5B75"
-  const fantom_frax = "0xdc301622e621166BD8E82f2cA0A26c13Ad0BE355"
+  const ethereum_pools = {
+    [btcPoolAddress] : {
+      type: PoolType.BTC,
+      isMetaPool: false,
+    },
+    [btcV2PoolAddress] : {
+      type: PoolType.BTC,
+      isMetaPool: false,
+    },
+    [usdPoolAddress] : {
+      type: PoolType.USD,
+      isMetaPool: false,
+    }
+    [usdV2PoolAddress] : {
+      type: PoolType.USD,
+      isMetaPool: false,
+    },
+    [susdPoolAddress] : {
+      
+    }
+  }
 
-  const fantom_tokens = {
-    [fantom_usdc]: [fantom_usdPoolAddress],
-    [fantom_frax]: [fantom_usdPoolAddress],
+  const fantom_usdPoolAddress = "0xBea9F78090bDB9e662d8CB301A00ad09A5b756e9"
+
+  const fantom_pools = {
+    [fantom_usdPoolAddress]: {
+      type: PoolType.USD,
+      isMetaPool: false,
+    }
   }
 
 /*==================================================
   TVL
   ==================================================*/
+
+  async function fetchEthereum() {
+
+  }
 
   async function tvl(timestamp, block) {
     let balances = {};
@@ -119,34 +149,52 @@
     return balances;
   }
 
-  async function tvlFantom(timestamp, block) {
-    let balances = {};
-    let calls = [];
+  async function fetchFantom() {
+    let balanceCalls = [];
+    let decimalCalls = [];
+    const tvl = 0;
 
     for (const token in fantom_tokens) {
-      for(const poolAddress of fantom_tokens[token])
-      calls.push({
+      for(const poolAddress of fantom_tokens[token]) {
+        balanceCalls.push({
+          target: token,
+          params: poolAddress,
+        })
+      }
+      decimalCalls.push({
         target: token,
-        params: poolAddress,
       })
     }
 
     // Pool Balances
     let balanceOfResults = await sdk.api.abi.multiCall({
-      block,
-      calls: calls,
+      calls: balanceCalls,
       abi: 'erc20:balanceOf',
+      chain: "fantom"
+    });
+    // Fetch Decimals
+    let decimalOfResults = await sdk.api.abi.multiCall({
+      calls: decimalCalls,
+      abi: 'erc20:decimals',
       chain: "fantom"
     });
 
     // Compute Balances
+    // Since we only have stalbecoins on Fantom, we can just use the balance of the pool
+    let sumOfBalancesDecimalAdjusted = BigNumber(0);
     _.each(balanceOfResults.output, (balanceOf) => {
         let address = balanceOf.input.target
-        let amount =  balanceOf.output
-        balances[address] = BigNumber(balances[address] || 0).plus(amount).toFixed()
+        let rawAmount = BigNumber(balanceOf.output)
+        decimalOfResults.output.find(decimalOf => {
+          if(decimalOf.input.target === address) {
+            let decimal = BigNumber(decimalOf.output)
+            let amount = rawAmount.div(BigNumber(10).pow(decimal))
+            sumOfBalancesDecimalAdjusted = sumOfBalancesDecimalAdjusted.plus(amount)
+          }
+        });
     });
 
-    return balances;
+    return sumOfBalancesDecimalAdjusted.toFixed();
   }
 
 /*==================================================
@@ -159,6 +207,6 @@
       tvl                       // tvl adapter
     },
     fantom: {
-      tvl: tvlFantom
+      fetch: fetchFantom(),
     }
   }
