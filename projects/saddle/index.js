@@ -63,51 +63,51 @@
   }
 
   const ethereum_pools = {
-    [btcPoolAddress] : {
+    [btcPoolAddress]: {
       type: PoolType.BTC,
       isMetaPool: false,
     },
-    [usdPoolAddress] : {
+    [usdPoolAddress]: {
       type: PoolType.USD,
       isMetaPool: false,
-    }
-    [alethPoolAddress] : {
+    },
+    [alethPoolAddress]: {
       type: PoolType.ETH,
       isMetaPool: false,
-    }
-    [usdV2PoolAddress] : {
+    },
+    [usdV2PoolAddress]: {
       type: PoolType.USD,
       isMetaPool: false,
     },
-    [susdPoolAddress] : {
+    [susdPoolAddress]: {
       type: PoolType.USD,
       isMetaPool: true,
-    }
-    [d4Pool] : {
+    },
+    [d4Pool]: {
       type: PoolType.USD,
       isMetaPool: false,
-    }
-    [btcV2PoolAddress] : {
+    },
+    [btcV2PoolAddress]: {
       type: PoolType.BTC,
       isMetaPool: false,
     },
-    [tbtcV2MetapoolAddress] : {
+    [tbtcV2MetapoolAddress]: {
       type: PoolType.BTC,
       isMetaPool: true,
     },
-    [wcusdMetapoolAddress] : {
+    [wcusdMetapoolAddress]: {
       type: PoolType.USD,
       isMetaPool: true,
     },
-    [susdMetapoolV2Address] : {
+    [susdMetapoolV2Address]: {
       type: PoolType.USD,
       isMetaPool: true,
     },
-    [tbtcV2MetapoolV2Address] : {
+    [tbtcV2MetapoolV2Address]: {
       type: PoolType.BTC,
       isMetaPool: true,
     },
-    [wcusdMetapoolV2Address] : {
+    [wcusdMetapoolV2Address]: {
       type: PoolType.USD,
       isMetaPool: true,
     },
