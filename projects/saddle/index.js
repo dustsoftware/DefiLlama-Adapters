@@ -27,6 +27,9 @@
   const btcV2PoolAddress = "0xdf3309771d2BF82cb2B6C56F9f5365C8bD97c4f2"
   const tbtcV2MetapoolAddress = "0xf74ebe6e5586275dc4CeD78F5DBEF31B1EfbE7a5"
   const wcusdMetapoolAddress = "0x3F1d224557afA4365155ea77cE4BC32D5Dae2174"
+  const susdMetapoolV2Address = "0x824dcD7b044D60df2e89B1bB888e66D8BCf41491"
+  const tbtcV2MetapoolV2Address = "0xA0b4a2667dD60d5CdD7EcFF1084F0CeB8dD84326"
+  const wcusdMetapoolV2Address = "0xc02D481B52Ae04Ebc76a8882441cfAED45eb8342"
 
   const tokens = {
     // TBTC
@@ -64,12 +67,12 @@
       type: PoolType.BTC,
       isMetaPool: false,
     },
-    [btcV2PoolAddress] : {
-      type: PoolType.BTC,
-      isMetaPool: false,
-    },
     [usdPoolAddress] : {
       type: PoolType.USD,
+      isMetaPool: false,
+    }
+    [alethPoolAddress] : {
+      type: PoolType.ETH,
       isMetaPool: false,
     }
     [usdV2PoolAddress] : {
@@ -77,8 +80,37 @@
       isMetaPool: false,
     },
     [susdPoolAddress] : {
-      
+      type: PoolType.USD,
+      isMetaPool: true,
     }
+    [d4Pool] : {
+      type: PoolType.USD,
+      isMetaPool: false,
+    }
+    [btcV2PoolAddress] : {
+      type: PoolType.BTC,
+      isMetaPool: false,
+    },
+    [tbtcV2MetapoolAddress] : {
+      type: PoolType.BTC,
+      isMetaPool: true,
+    },
+    [wcusdMetapoolAddress] : {
+      type: PoolType.USD,
+      isMetaPool: true,
+    },
+    [susdMetapoolV2Address] : {
+      type: PoolType.USD,
+      isMetaPool: true,
+    },
+    [tbtcV2MetapoolV2Address] : {
+      type: PoolType.BTC,
+      isMetaPool: true,
+    },
+    [wcusdMetapoolV2Address] : {
+      type: PoolType.USD,
+      isMetaPool: true,
+    },
   }
 
   const fantom_usdPoolAddress = "0xBea9F78090bDB9e662d8CB301A00ad09A5b756e9"
